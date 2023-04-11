@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.cryptoapp.data.network.model.CoinInfoDto
 
 @Database(entities = [CoinInfoDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -29,5 +28,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun coinPriceInfoDao(): CoinPriceInfoDao
+    abstract fun coinPriceInfoDao(): CoinInfoDao
 }

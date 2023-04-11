@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.example.cryptoapp.data.network.model.CoinInfoDto
 
 @Dao
-interface CoinPriceInfoDao {
+interface CoinInfoDao {
     @Query("SELECT * FROM full_price_list ORDER BY lastUpdate DESC")
     fun getPriceList(): LiveData<List<CoinInfoDto>>
 
