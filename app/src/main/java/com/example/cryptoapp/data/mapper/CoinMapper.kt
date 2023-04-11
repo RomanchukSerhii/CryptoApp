@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data.database.mapper
+package com.example.cryptoapp.data.mapper
 
 import com.example.cryptoapp.data.database.CoinInfoDbModel
 import com.example.cryptoapp.data.network.model.CoinInfoDto
