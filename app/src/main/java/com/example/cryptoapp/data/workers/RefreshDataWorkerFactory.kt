@@ -8,11 +8,10 @@ import com.example.cryptoapp.data.database.CoinInfoDao
 import com.example.cryptoapp.data.mapper.CoinMapper
 import com.example.cryptoapp.data.network.ApiService
 import javax.inject.Inject
+import javax.inject.Provider
 
 class RefreshDataWorkerFactory @Inject constructor(
-    private val coinInfoDao: CoinInfoDao,
-    private val apiService: ApiService,
-    private val mapper: CoinMapper
+    private val workerProviders: @JvmSuppressWildcards Map<Class<out ListenableWorker>, Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
 
     override fun createWorker(
@@ -20,12 +19,12 @@ class RefreshDataWorkerFactory @Inject constructor(
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker? {
-        return RefreshDataWorker(
-            appContext,
-            workerParameters,
-            coinInfoDao,
-            apiService,
-            mapper
-        )
+        return when (workerClassName) {
+            RefreshDataWorker::class.qualifiedName -> {
+                val childWorkerFactory = workerProviders[RefreshDataWorker::class.java]?.get()
+                childWorkerFactory?.create(appContext, workerParameters)
+            }
+            else -> null
+        }
     }
 }
